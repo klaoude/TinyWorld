@@ -32,6 +32,8 @@ void MainGame::InitSystem()
 	m_textureProgram.addAttribute("vertexUV");
 	m_textureProgram.linkShaders();
 
+	m_entitySpriteBatch.init();
+
 	m_player = new Player();
 	m_player->Init(glm::vec2(100, 100), 1.f);
 }
@@ -127,11 +129,14 @@ void MainGame::GameLoop()
 		{
 			float deltaTime = std::min(totalDeltaTime, MAX_DELTA_TIME);
 
-			m_player->Update();
+			m_player->Update(m_im, deltaTime);
 
 			totalDeltaTime -= deltaTime;
 			i++;
 		}
+
+		//m_camera.setPosition(m_player->getPos());
+		m_camera.update();
 
 		Draw();
 
